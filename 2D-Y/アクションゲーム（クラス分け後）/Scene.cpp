@@ -12,12 +12,13 @@ void Scene::Update()
 	m_player.Action();
 	m_hit.Map_Player();
 	m_player.Update();
-	m_map.Update();
+	m_map.Update(m_player.GetScrollX());
 }
 
 void Scene::Init()
 {
 	m_hit.SetOwner(this);
+	m_player.SetOwner(this);
 
 	m_map.LoadMap();
 
@@ -28,8 +29,8 @@ void Scene::Init()
 	m_player.SetTex(&m_playerTex);
 	m_map.SetTex(&m_mapTex);
 
-	m_player.Init();
 	m_map.Init();
+	m_player.Init();
 
 }
 

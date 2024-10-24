@@ -42,11 +42,11 @@ void C_Map::Init()
 	}
 }
 
-void C_Map::Update()
+void C_Map::Update(float scrollX)
 {
 	for (int h = 0; h < MapHeight; h++) {
 		for (int w = 0; w < MapWidth; w++) {
-			m_mat[h][w] = Math::Matrix::CreateTranslation(m_pos[h][w].x, m_pos[h][w].y, 0);
+			m_mat[h][w] = Math::Matrix::CreateTranslation(m_pos[h][w].x - scrollX, m_pos[h][w].y, 0);
 		}
 	}
 }

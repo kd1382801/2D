@@ -8,7 +8,7 @@ public:
 
 	void LoadMap();
 	void Init();
-	void Update();
+	void Update(float scrollX);
 	void Draw();
 
 	void SetTex(KdTexture* mTex) { m_pTex = mTex; }

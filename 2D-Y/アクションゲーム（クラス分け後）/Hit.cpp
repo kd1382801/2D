@@ -21,7 +21,7 @@ void C_Hit::Map_Player()
 		for (int w = 0; w < map->GetWidth(); w++) {
 			//0‚¾‚Á‚½‚çŽc‚è‚Ìˆ—‚ð”ò‚Î‚·
 			if (map->GetData(h, w) != 1)continue;
-
+			
 			const float mapRight  = map->GetPos(h, w).x + map->GetRadius();
 			const float mapLeft   = map->GetPos(h, w).x - map->GetRadius();
 			const float mapTop    = map->GetPos(h, w).y + map->GetRadius();

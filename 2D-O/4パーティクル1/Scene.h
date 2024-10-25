@@ -12,6 +12,7 @@ private:
 
 	float playerX;
 	float playerY;
+	bool bPlayerMove;//自機が動いたかのフラグ
 
 	//フレーム数
 	int frame;

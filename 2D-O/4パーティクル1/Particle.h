@@ -7,7 +7,7 @@ public:
 	~Particle();
 
 	void Init();
-	void Update();
+	void Update(Math::Vector2 a_playerPos,bool a_bPlayerMove);
 	void Draw();
 
 	void SetTexture(KdTexture* a_pTexture);

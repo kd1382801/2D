@@ -26,7 +26,7 @@ void Particle::Init()
 
 }
 
-void Particle::Update()
+void Particle::Update(Math::Vector2 a_playerPos,bool a_bPlayerMove)
 {
 	//有効期間
 	m_lifespan--;
@@ -35,16 +35,18 @@ void Particle::Update()
 		if (!m_bRepeat)return;
 
 		//繰り返しをする場合(true)の場合
-		//パーティクルを再度発生させる
-		Emit(
-			{ 150,50 },
-			{ Rnd() * 6 - 3,Rnd() * 6 - 3 },
-			Rnd() * 3 + 2,
-			{ 1,1,1,0.2f },
-			Rnd() * 90 + 10,
-			true
-		);
-
+		//自機が動いたとき
+		if (a_bPlayerMove) {
+			//パーティクルを再度発生させる
+			Emit(
+				{ a_playerPos.x,a_playerPos.y - 32 },
+				{ Rnd() * 3 - 1.5f,Rnd() * 0.5f },
+				Rnd() * 0.7f + 0.7f,
+				{ 1,1,1,0.2f },
+				Rnd() * 35 + 10,
+				true
+			);
+		}
 	}
 
 	//サイズ変更

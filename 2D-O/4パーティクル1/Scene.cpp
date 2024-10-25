@@ -13,12 +13,15 @@ void Scene::Draw2D()
 	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };	//色RGBA
 	SHADER.m_spriteShader.DrawTex(&charaTex, 0, 0, &srcRect, &color);
 
+	//検証 加算合成
+	//D3D.SetBlendState(BlendMode::Add);
+
 	//パーティクル
 	for (int i = 0; i < smokeNum; i++) {
 		smoke[i].Draw();
 	}
 
-
+	//D3D.SetBlendState(BlendMode::Alpha);
 
 
 	//文字列はテクスチャなどを描画した後に書くこと
@@ -31,28 +34,34 @@ void Scene::Draw2D()
 
 void Scene::Update()
 {
+	bPlayerMove = false;
+
 	//座標更新
 	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		playerX += 8;
+		bPlayerMove = true;
 	}
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
 		playerX -= 8;
+		bPlayerMove = true;
 	}
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		playerY += 8;
+		bPlayerMove = true;
 	}
 	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
 		playerY -= 8;
+		bPlayerMove = true;
 	}
 	
 	//行列の作成
 	matrix = Math::Matrix::CreateTranslation(playerX, playerY, 0);
 
-	//zキーで緑のパーティクルを発生
+	//zキーでパーティクルを発生
 	if (GetAsyncKeyState('Z') & 0x8000) {
 		for (int i = 0; i < smokeNum; i++) {
 			smoke[i].Emit(
@@ -66,7 +75,7 @@ void Scene::Update()
 		}
 	}
 	
-	//xキーで緑のパーティクルをリピート
+	//xキーでパーティクルをリピート
 	if (GetAsyncKeyState('X') & 0x8000) {
 		for (int i = 0; i < smokeNum; i++) {
 			//リピート再生の場合は初回のEmitの値はほとんど0でok
@@ -81,10 +90,23 @@ void Scene::Update()
 		}
 	}
 
+	//cキーで背景にパーティクルを発生
+	if (GetAsyncKeyState('C') & 0x8000) {
+		for (int i = 0; i < smokeNum; i++) {
+			smoke[i].Emit(
+				{ Rnd() * 1280 - 640,Rnd() * 720 - 360 },
+				{ Rnd() * 10 - 5,Rnd() * 10 - 5 },
+				Rnd() * 10 + 5,
+				{ Rnd() + 0.5f,Rnd() + 0.5f,Rnd() + 0.5f,0.5f },
+				1000,
+				false
+			);
+		}
+	}
 
 	//パーティクル
 	for (int i = 0; i < smokeNum; i++) {
-		smoke[i].Update();
+		smoke[i].Update({ playerX,playerY },bPlayerMove);
 	}
 
 	//フレーム数を増やす

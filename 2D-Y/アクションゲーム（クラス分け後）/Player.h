@@ -18,6 +18,7 @@ public:
 
 	void SetTex(KdTexture* tex) { m_pTex = tex; }
 	void SetOwner(Scene* pOwner) { m_pOwner = pOwner; }
+	void SetAlive(bool alive) { m_alive = alive; }
 
 	Math::Vector2 GetPos() { return m_pos; }
 	Math::Vector2 GetFuturePos() { return m_pos + m_move; }

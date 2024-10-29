@@ -51,3 +51,72 @@ void C_Hit::Map_Player()
 		}
 	}
 }
+
+void C_Hit::Map_Enemy()
+{
+	C_Enemy* enemy = m_hOwner->GetEnemy();
+
+	const float enemyRight = enemy->GetPos().x + enemy->GetRadius();
+	const float enemyLeft = enemy->GetPos().x - enemy->GetRadius();
+	const float enemyTop = enemy->GetPos().y + enemy->GetRadius();
+	const float enemyBottom = enemy->GetPos().y - enemy->GetRadius();
+
+	const float nextRight = enemy->GetFuturePos().x + enemy->GetRadius();
+	const float nextLeft = enemy->GetFuturePos().x - enemy->GetRadius();
+	const float nextTop = enemy->GetFuturePos().y + enemy->GetRadius();
+	const float nextBottom = enemy->GetFuturePos().y - enemy->GetRadius();
+
+	C_Map* map = m_hOwner->GetMap();
+
+	for (int h = 0; h < map->GetHeight(); h++) {
+		for (int w = 0; w < map->GetWidth(); w++) {
+			//0‚¾‚Á‚½‚çŽc‚è‚Ìˆ—‚ð”ò‚Î‚·
+			if (map->GetData(h, w) != 1)continue;
+
+			const float mapRight = map->GetPos(h, w).x + map->GetRadius();
+			const float mapLeft = map->GetPos(h, w).x - map->GetRadius();
+			const float mapTop = map->GetPos(h, w).y + map->GetRadius();
+			const float mapBottom = map->GetPos(h, w).y - map->GetRadius();
+
+			if (enemyRight > mapLeft && enemyLeft < mapRight) {
+				//ã‚©‚ç‚Ì“–‚½‚è”»’è
+				if (nextBottom < mapTop && nextTop > mapTop) {
+					enemy->MapHitY(mapTop + enemy->GetRadius(), 0);
+				}
+				//‰º‚©‚ç‚Ì“–‚½‚è”»’è
+				else if (nextTop > mapBottom && nextBottom < mapBottom) {
+					enemy->MapHitY(mapBottom - enemy->GetRadius(), 0);
+				}
+			}
+
+			if (enemyTop > mapBottom && enemyBottom < mapTop) {
+				//‰E‚©‚ç‚Ì“–‚½‚è”»’è
+				if (nextLeft < mapRight && nextRight > mapRight) {
+					enemy->MapHitX(mapRight + enemy->GetRadius(), 0);
+				}
+				//¶‚©‚ç‚Ì“–‚½‚è”»’è
+				else if (nextRight > mapLeft && nextLeft < mapLeft) {
+					enemy->MapHitX(mapLeft - enemy->GetRadius(), 0);
+				}
+			}
+		}
+	}
+}
+
+void C_Hit::Enemy_Player()
+{
+	C_Player* player = m_hOwner->GetPlayer();
+	C_Enemy* enemy = m_hOwner->GetEnemy();
+
+	const float x = enemy->GetPos().x	- player->GetPos().x;
+	const float y = enemy->GetPos().y - player->GetPos().y;
+	const float c = sqrt(x * x + y * y);
+
+	const float sumRadius = player->GetRadius() + enemy->GetRadius();
+
+	//‹——£”»’è
+	if (c < sumRadius) {
+		player->SetAlive(false);
+	}
+
+}

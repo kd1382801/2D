@@ -9,6 +9,8 @@ public:
 	~C_Hit(){}
 
 	void Map_Player();
+	void Map_Enemy();
+	void Enemy_Player();
 
 	void SetOwner(Scene* hOwner) { m_hOwner = hOwner; }
 

@@ -44,6 +44,8 @@ void C_Player::Action()
 
 void C_Player::Update()
 {
+	if (!m_alive)return;
+
 	//À•WŠm’èˆ—
 	m_pos += m_move;
 

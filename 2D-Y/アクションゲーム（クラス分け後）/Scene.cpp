@@ -5,13 +5,18 @@ void Scene::Draw2D()
 {
 	m_map.Draw();
 	m_player.Draw();
+	m_enemy.Draw();
 }
 
 void Scene::Update()
 {
 	m_player.Action();
+	m_enemy.Action();
 	m_hit.Map_Player();
+	m_hit.Map_Enemy();
+	m_hit.Enemy_Player();
 	m_player.Update();
+	m_enemy.Update(m_player.GetScrollX());
 	m_map.Update(m_player.GetScrollX());
 }
 
@@ -24,13 +29,16 @@ void Scene::Init()
 
 	// ‰æ‘œ‚Ì“Ç‚İ‚İˆ—
 	m_playerTex.Load("Texture/Player/Chara.png");
+	m_enemyTex.Load("Texture/Player/Chara.png");
 	m_mapTex.Load("Texture/Map/MapChip.png");
 
 	m_player.SetTex(&m_playerTex);
+	m_enemy.SetTex(&m_enemyTex);
 	m_map.SetTex(&m_mapTex);
 
 	m_map.Init();
 	m_player.Init();
+	m_enemy.Init();
 
 }
 
@@ -38,6 +46,7 @@ void Scene::Release()
 {
 	// ‰æ‘œ‚Ì‰ğ•úˆ—
 	m_playerTex.Release();
+	m_enemyTex.Release();
 	m_mapTex.Release();
 }
 

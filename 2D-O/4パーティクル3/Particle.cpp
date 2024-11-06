@@ -136,18 +136,18 @@ void Particle::UpdateLight(Math::Vector2 a_playerPos, bool a_bPlayerMove)
 		//if (a_bPlayerMove) {
 			//パーティクルを再度発生させる
 		Emit(
-			{ a_playerPos.x,a_playerPos.y - 32 },
-			{ Rnd() * 10 - 5,Rnd() * 10 - 5 },
-			Rnd() * 2 + 1,
-			{ 0.3,0.3,1,0.5f },
-			Rnd() * 15 + 10,
+			{ a_playerPos.x,a_playerPos.y},
+			{ Rnd() * 4 - 2,Rnd() * 4 - 2 },
+			5,
+			{ Rnd()+0.3f,1,Rnd() + 0.3f,0.3f },
+			Rnd() * 45 + 10,
 			true
 		);
 		//}
 	}
 
 	//サイズ変更
-	m_size *= 0.7f;//減らす
+	m_size *= 0.8f;//減らす
 	//m_size *= 1.10f;//増やす
 
 	//座席更新

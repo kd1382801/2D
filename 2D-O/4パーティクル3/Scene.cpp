@@ -3,15 +3,6 @@
 
 void Scene::Draw2D()
 {
-	//行列をセット
-	SHADER.m_spriteShader.SetMatrix(matrix);
-
-	//描画
-	//SHADER.m_spriteShader.DrawTex(&charaTex, Math::Rectangle{ 0,0,64,64 }, 1.0f);
-
-	Math::Rectangle srcRect{ 0,0,64,64 };			//テクスチャ座標
-	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };	//色RGBA
-	SHADER.m_spriteShader.DrawTex(&charaTex, 0, 0, &srcRect, &color);
 
 
 	//煙用パーティクル
@@ -21,11 +12,6 @@ void Scene::Draw2D()
 
 	//検証 加算合成
 	D3D.SetBlendState(BlendMode::Add);
-	
-	//炎用パーティクル
-	for (int i = 0; i < fireNum; i++) {
-		fire[i].DrawFire();
-	}
 
 	//光用パーティクル
 	for (int i = 0; i < lightNum; i++) {
@@ -34,6 +20,21 @@ void Scene::Draw2D()
 
 	D3D.SetBlendState(BlendMode::Alpha);
 
+	SHADER.m_spriteShader.SetMatrix(matrix);
+
+	Math::Rectangle srcRect{ 0,0,64,64 };			//テクスチャ座標
+	Math::Color color = { 1.0f,1.0f,1.0f,1.0f };	//色RGBA
+	SHADER.m_spriteShader.DrawTex(&charaTex, 0, 0, &srcRect, &color);
+
+	//加算合成
+	D3D.SetBlendState(BlendMode::Add);
+
+	//炎用パーティクル
+	for (int i = 0; i < fireNum; i++) {
+		fire[i].DrawFire();
+	}
+
+	D3D.SetBlendState(BlendMode::Alpha);
 
 	//文字列はテクスチャなどを描画した後に書くこと
 	// 文字列表示
@@ -130,7 +131,7 @@ void Scene::Update()
 		}
 	}
 	
-	//bキーで炎パーティクルをリピート
+	//bキーで光パーティクルをリピート
 	if (GetAsyncKeyState('B') & 0x8000) {
 		for (int i = 0; i < lightNum; i++) {
 			//リピート再生の場合は初回のEmitの値はほとんど0でok

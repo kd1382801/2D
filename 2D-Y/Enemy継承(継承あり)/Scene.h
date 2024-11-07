@@ -1,4 +1,5 @@
 #pragma once
+#include "Enemy/EnemyBase.h"
 #include "Enemy/OrangeEnemy.h"
 #include "Enemy/BlueEnemy.h"
 #include "Enemy/GreenEnemy.h"
@@ -10,9 +11,12 @@ private:
 	KdTexture m_enemyTex;
 
 	C_OrangeEnemy m_orange;
-	C_BlueEnemy m_blue;
-	C_GreenEnemy m_green;
+	C_BlueEnemy	  m_blue;
+	//C_GreenEnemy  m_green;	//デフォルトコンストラクタを実行
+	C_GreenEnemy  m_green{1};	//引数ありのコンストラクタを実行
 	
+	C_EnemyBase* m_base;//基底クラスのポインタ
+	//C_EnemyBase m_jBase; ←抽象クラスだからインスタンス化ができない
 
 public:
 

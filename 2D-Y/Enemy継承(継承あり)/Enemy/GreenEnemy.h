@@ -4,7 +4,8 @@
 class C_GreenEnemy : public C_EnemyBase{
 public:
 
-	C_GreenEnemy() {}
+	C_GreenEnemy() {}//デフォルトコンストラクタ
+	C_GreenEnemy(float move) { MovePow = move; }//引数ありのコンストラクタ
 	~C_GreenEnemy() {}
 
 	void Init();
@@ -14,6 +15,6 @@ public:
 
 private:
 
-	const float MovePow = 4.0f;
+	float MovePow = 4.0f;
 
 };

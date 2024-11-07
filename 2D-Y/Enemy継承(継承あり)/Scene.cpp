@@ -19,7 +19,10 @@ void Scene::Init()
 {
 	m_enemyTex.Load("Texture/Player/Chara.png");
 
-	m_orange.Init();
+	m_base = &m_orange;//インスタンスのアドレスをセット
+	m_base->Init();
+
+	//m_orange.Init();
 	m_blue.Init();
 	m_green.Init();
 

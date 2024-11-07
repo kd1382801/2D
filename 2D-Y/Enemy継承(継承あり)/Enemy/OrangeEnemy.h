@@ -7,8 +7,8 @@ public:
 	C_OrangeEnemy(){}
 	~C_OrangeEnemy(){}
 
-	void Init();
-	void Draw();
+	void Init() override;
+	void Draw() override;
 
 	void SetTex(KdTexture* eTex) { m_eTex = eTex; }
 

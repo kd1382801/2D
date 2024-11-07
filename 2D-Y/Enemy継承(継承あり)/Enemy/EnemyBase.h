@@ -6,9 +6,9 @@ public:
 	C_EnemyBase(){}
 	~C_EnemyBase(){}
 
-	void Init();
+	virtual void Init() = 0;//純粋仮想関数(オーバーライドされる前提の関数)
 	void Update();
-	void Draw();
+	virtual void Draw();//仮想関数
 
 protected:
 
